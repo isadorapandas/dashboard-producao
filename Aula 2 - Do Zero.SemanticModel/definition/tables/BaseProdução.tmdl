@@ -1,0 +1,183 @@
+table BaseProdução
+	lineageTag: a40024c2-5919-4a24-bb84-fd4499ab47b1
+
+	measure 'Horas Trabalhadas' = ```
+			SUM('BaseProdução'[Total Horas]) 
+			```
+		lineageTag: 5323ad74-3475-4b73-a5e7-741006cd09ff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Aprovado' = SUM('BaseProdução'[Qtd Aprovada])
+		formatString: #,0
+		lineageTag: ce49bed4-fb9f-488f-a87a-f8016308dabd
+
+	measure 'Total Rejeitado' = SUM('BaseProdução'[Qtd Rejeitada])
+		formatString: #,0
+		lineageTag: 34236989-98b6-4187-b07c-3623133915e4
+
+	measure 'Total Produzido' = [Total Aprovado]+[Total Rejeitado]
+		formatString: #,0
+		lineageTag: d98bd47a-4670-40ed-b2d4-d41e34999027
+
+	measure 'Horas Produtivas' = ```
+			CALCULATE(SUM('BaseProdução'[Total Horas]),'BaseProdução'[Ocorrência]=BLANK()) 
+			```
+		lineageTag: cd2430f8-9545-4d97-b3fd-4cabfc60e1f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Horas Paradas' = ```
+			CALCULATE(SUM('BaseProdução'[Total Horas]),'BaseProdução'[Ocorrência]<>BLANK()) 
+			```
+		lineageTag: 876da65a-b0bf-472e-8512-41f90517ebeb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Disponibilidade = ```
+			[Horas Produtivas]/[Horas Trabalhadas] 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c722d878-3acb-4ca4-8be2-02c4f9b31f7d
+
+	measure '% Qualidade' = [Total Aprovado]/[Total Produzido]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 867875b3-2078-45f0-bdab-a3fe1df2b79e
+
+	column 'Numero Ordem'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f9e70d8-cf68-4c2a-8411-20284f4529ef
+		summarizeBy: sum
+		sourceColumn: Numero Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operador
+		dataType: string
+		lineageTag: 4f731e3d-8910-4084-b3d8-42d833f41177
+		summarizeBy: none
+		sourceColumn: Operador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produto
+		dataType: string
+		lineageTag: 3cac2fde-0b6d-4508-a80a-59d1b2af5923
+		summarizeBy: none
+		sourceColumn: Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ocorrência
+		dataType: string
+		lineageTag: d9ea1e20-47e7-45a9-8aa8-2fb4b00865dd
+		summarizeBy: none
+		sourceColumn: Ocorrência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Inicio'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0d5509aa-0ab1-4200-a79b-307e223d878b
+		summarizeBy: none
+		sourceColumn: Data Inicio
+
+		variation Variation
+			isDefault
+			relationship: 97bca0e1-6034-4205-9d60-1452d08094ff
+			defaultHierarchy: LocalDateTable_f794840d-26af-4038-af50-4061262cc810.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Hora Inicio'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b6a83bd8-6fb6-4c08-ac59-4a6ad73e8ed6
+		summarizeBy: none
+		sourceColumn: Hora Inicio
+
+		variation Variation
+			isDefault
+			relationship: 1c4d948f-d615-40a6-bb0e-04248da37d6c
+			defaultHierarchy: LocalDateTable_6fe5ad8e-09af-4867-8ffd-d048067b2241.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Fim'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 416e4b3b-341b-4956-8921-6b2295810507
+		summarizeBy: none
+		sourceColumn: Data Fim
+
+		variation Variation
+			isDefault
+			relationship: 709635e7-0bdf-450f-9691-e495010e564f
+			defaultHierarchy: LocalDateTable_5445220f-70fa-4e56-b834-7d2ee554c046.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Hora Fim'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 50e93425-b7c8-4a89-ac21-6789232f9e30
+		summarizeBy: none
+		sourceColumn: Hora Fim
+
+		variation Variation
+			isDefault
+			relationship: 01219f5b-76ad-4682-9413-948d06de73ae
+			defaultHierarchy: LocalDateTable_b4af2b99-eae0-4772-b1fa-429997cbf894.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Horas'
+		dataType: double
+		lineageTag: bcff3d5f-6f7d-4f6d-8907-3a879ea03861
+		summarizeBy: sum
+		sourceColumn: Total Horas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Qtd Rejeitada'
+		dataType: int64
+		formatString: 0
+		lineageTag: b314ed98-b644-4d02-a3db-950eb4ec7244
+		summarizeBy: sum
+		sourceColumn: Qtd Rejeitada
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Qtd Aprovada'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3cb6f4ac-e9dc-4841-88f9-25c468282ce1
+		summarizeBy: sum
+		sourceColumn: Qtd Aprovada
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BaseProdução-3ac1a3c8-92fa-4d3a-a105-e65dcdb10cd4 = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\alonp\hashtagtreinamentos.com\Diego Amorim - Hashtag\Online\Arquivos das Aulas\Intensivão Power BI\LPBI9\2º Dia\Produção.xlsx"), null, true),
+				    BaseProdução_Sheet = Fonte{[Item="BaseProdução",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(BaseProdução_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Numero Ordem", Int64.Type}, {"Operador", type text}, {"Produto", type text}, {"Ocorrência", type text}, {"Data Inicio", type date}, {"Hora Inicio", type datetime}, {"Data Fim", type date}, {"Hora Fim", type datetime}, {"Total Horas", type number}, {"Qtd Aprovada", Int64.Type}, {"Qtd Rejeitada", Int64.Type}}),
+				    #"Linhas em Branco Removidas" = Table.SelectRows(#"Tipo Alterado", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Linhas em Branco Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

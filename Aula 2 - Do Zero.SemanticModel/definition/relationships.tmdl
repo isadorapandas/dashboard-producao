@@ -1,0 +1,20 @@
+relationship 97bca0e1-6034-4205-9d60-1452d08094ff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: BaseProdução.'Data Inicio'
+	toColumn: LocalDateTable_f794840d-26af-4038-af50-4061262cc810.Date
+
+relationship 1c4d948f-d615-40a6-bb0e-04248da37d6c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: BaseProdução.'Hora Inicio'
+	toColumn: LocalDateTable_6fe5ad8e-09af-4867-8ffd-d048067b2241.Date
+
+relationship 709635e7-0bdf-450f-9691-e495010e564f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: BaseProdução.'Data Fim'
+	toColumn: LocalDateTable_5445220f-70fa-4e56-b834-7d2ee554c046.Date
+
+relationship 01219f5b-76ad-4682-9413-948d06de73ae
+	joinOnDateBehavior: datePartOnly
+	fromColumn: BaseProdução.'Hora Fim'
+	toColumn: LocalDateTable_b4af2b99-eae0-4772-b1fa-429997cbf894.Date
+
